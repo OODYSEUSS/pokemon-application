@@ -1,26 +1,21 @@
-import 'dart:convert' show jsonDecode;
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:pokemon_application/models/pokemon_list_item_model.dart';
+import 'package:pokemon_application/services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var pokemonApi = "https://pokeapi.co/api/v2/pokemon";
-  late List pokemon = [];
+  late Future<List<PokemonListItemModel>> _pokemonList;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    if (mounted) {
-      fetchPokemonData();
-    }
+    _pokemonList = ApiService.fetchPokemonList();
   }
 
   @override
@@ -34,52 +29,42 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(color: Color.fromRGBO(255, 203, 5, 1), fontSize: 30),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: pokemon.length,
+      body: FutureBuilder<List<PokemonListItemModel>>(
+        future: _pokemonList,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else {
+            final pokemonList = snapshot.data!;
+            return ListView.builder(
+              itemCount: pokemonList.length,
               itemBuilder: (context, index) {
-                if (pokemon.isEmpty) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 2,
-                      vertical: 2,
-                    ),
-                    child: Card(
-                      elevation: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          pokemon[index]["name"],
-                          style: TextStyle(fontSize: 22),
-                        ),
+                final pokemon = pokemonList[index];
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                  child: Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        pokemon.name,
+                        style: const TextStyle(fontSize: 22),
                       ),
                     ),
-                  );
-                }
+                  ),
+                );
               },
-            ),
-          )
-        ],
+            );
+          }
+        },
       ),
     );
-  }
-
-  void fetchPokemonData() {
-    var url = Uri.https("pokeapi.co", "/api/v2/pokemon");
-    http.get(url).then((value) {
-      if (value.statusCode == 200) {
-        Map<String, dynamic> data = jsonDecode(value.body);
-        List<dynamic> results = data['results'];
-        setState(() {
-          pokemon = results;
-        });
-      }
-    });
   }
 }
