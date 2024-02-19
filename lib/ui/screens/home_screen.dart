@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_application/models/pokemon_list_item_model.dart';
 import 'package:pokemon_application/services/api_services.dart';
+import 'package:pokemon_application/ui/screens/pokemon_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -51,11 +52,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                   child: Card(
                     elevation: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        pokemon.name,
-                        style: const TextStyle(fontSize: 22),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PokemonDetailsScreen(pokemon: pokemon),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          pokemon.name,
+                          style: const TextStyle(fontSize: 22),
+                        ),
                       ),
                     ),
                   ),
