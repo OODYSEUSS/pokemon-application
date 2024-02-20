@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_application/models/pokemon_list_item_model.dart';
 import 'package:pokemon_application/models/pokemon_details_model.dart';
 import 'package:pokemon_application/services/api_services.dart';
+import 'package:pokemon_application/styles/text_styles.dart';
 
 class PokemonDetailsScreen extends StatefulWidget {
   final PokemonListItemModel pokemon;
@@ -24,6 +25,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(52, 102, 175, 1),
@@ -44,11 +47,88 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network('${pokemon.frontImageUrl}'),
-                Text('Name: ${pokemon.name}'),
-                Text('Type: ${pokemon.type.join(', ')}'),
-                Text('Weight: ${pokemon.weight}'),
-                Text('Height: ${pokemon.height}'),
+                Center(
+                    child: Image.network(
+                  '${pokemon.frontImageUrl}',
+                  fit: BoxFit.contain,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${pokemon.name}',
+                      style: textStyleName,
+                    ),
+                  ],
+                ),
+                Divider(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: width * 0.3,
+                        child: Text(
+                          'Type:',
+                          style: textStyleAbout,
+                        ),
+                      ),
+                      Container(
+                        // width: width * 0.3,
+                        child: Text(
+                          '${pokemon.type.join(', ')}',
+                          style: textStyleAboutBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: width * 0.3,
+                        child: Text(
+                          'Weight:',
+                          style: textStyleAbout,
+                        ),
+                      ),
+                      Container(
+                        // width: width * 0.3,
+                        child: Text(
+                          '${pokemon.weight / 10} kg',
+                          style: textStyleAboutBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: width * 0.3,
+                        child: Text(
+                          'Height:',
+                          style: textStyleAbout,
+                        ),
+                      ),
+                      Container(
+                        // width: width * 0.3,
+                        child: Text(
+                          '${pokemon.height * 10} cm',
+                          style: textStyleAboutBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           }
