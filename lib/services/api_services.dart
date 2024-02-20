@@ -24,7 +24,7 @@ class ApiService {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      final int id = data['id'];
+      // final int id = data['id'];
       final String name = data['name'];
       final List<dynamic> types = data['types'];
       List<String> typeNames = [];
@@ -35,7 +35,7 @@ class ApiService {
       final int height = data['height'];
       final String frontImageUrl = data['sprites']['front_default'] ?? '';
       return PokemonDetailsModel(
-        id: id,
+        // id: id,
         name: name,
         type: typeNames,
         weight: weight,
