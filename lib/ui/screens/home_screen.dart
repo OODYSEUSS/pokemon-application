@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_application/models/pokemon_list_item_model.dart';
 import 'package:pokemon_application/services/api_services.dart';
+import 'package:pokemon_application/styles/text_styles.dart';
 import 'package:pokemon_application/ui/screens/pokemon_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 final pokemon = pokemonList[index];
                 return Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   child: Card(
                     elevation: 2,
                     child: InkWell(
@@ -64,9 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          pokemon.name,
-                          style: const TextStyle(fontSize: 22),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            pokemon.name,
+                            style: textStyleHome,
+                          ),
                         ),
                       ),
                     ),
