@@ -26,7 +26,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    // var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(52, 102, 175, 1),
@@ -49,7 +49,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
               children: [
                 Center(
                     child: Image.network(
-                  '${pokemon.frontImageUrl}',
+                  pokemon.frontImageUrl,
                   fit: BoxFit.contain,
                   width: MediaQuery.of(context).size.width * 0.6,
                 )),
@@ -57,14 +57,15 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '${pokemon.name}',
+                      pokemon.name,
                       style: textStyleName,
                     ),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -78,7 +79,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                       Container(
                         // width: width * 0.3,
                         child: Text(
-                          '${pokemon.type.join(', ')}',
+                          pokemon.type.join(', '),
                           style: textStyleAboutBold,
                         ),
                       ),
@@ -86,7 +87,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -108,7 +110,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
