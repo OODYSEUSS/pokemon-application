@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   sqflite: ^2.0.0
+  path: any 
   flutter:
     sdk: flutter
 
